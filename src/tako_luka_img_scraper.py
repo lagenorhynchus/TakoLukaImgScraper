@@ -7,8 +7,8 @@ import requests
 from bs4 import BeautifulSoup
 
 TARGET_SUFFIX = ('.gif', '.jpg', '.jpeg', '.png')
-
 os.environ['REQUESTS_CA_BUNDLE'] = os.path.abspath('../certs/cacert.pem')
+file_names = set()
 
 
 def fetch_page(url):
@@ -22,13 +22,17 @@ def fetch_page(url):
 def download_img(url, dst_dir):
     if not url.endswith(TARGET_SUFFIX):
         return
-    res = requests.get(url)
-    if res.status_code != 200:
+    file_name = os.path.basename(url)
+    if file_name in file_names:
         return
+    file_names.add(file_name)
     print('downloading a file...')
     print(url)
     time.sleep(1)
-    with open(os.path.join(dst_dir, os.path.basename(url)), 'wb') as f:
+    res = requests.get(url)
+    if res.status_code != 200:
+        return
+    with open(os.path.join(dst_dir, file_name), 'wb') as f:
         f.write(res.content)
 
 
