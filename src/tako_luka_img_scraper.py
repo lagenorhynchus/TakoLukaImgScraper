@@ -1,5 +1,6 @@
 import argparse
 import os
+import time
 from urllib.parse import urljoin
 
 import requests
@@ -24,8 +25,9 @@ def download_img(url, dst_dir):
     res = requests.get(url)
     if res.status_code != 200:
         return
-    print('downloading file...')
+    print('downloading a file...')
     print(url)
+    time.sleep(1)
     with open(os.path.join(dst_dir, os.path.basename(url)), 'wb') as f:
         f.write(res.content)
 
