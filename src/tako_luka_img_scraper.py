@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-TARGET_SUFFIX = ('.gif', '.jpg', '.png')
+TARGET_SUFFIX = ('.gif', '.jpg', '.jpeg', '.png')
 
 os.environ['REQUESTS_CA_BUNDLE'] = os.path.abspath('../certs/cacert.pem')
 
