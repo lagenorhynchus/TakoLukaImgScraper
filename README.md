@@ -3,7 +3,9 @@
 ## Usage
 ```console
 $ tako_luka_img_scraper -h
-usage: tako_luka_img_scraper.py [-h] [-o OUTPATH] [-s SELECTOR] [-a ATTR] url
+usage: tako_luka_img_scraper.py [-h] [-o OUTPATH] [-s SELECTOR] [-a ATTRIBUTE]
+                                [-e EXTENSION [EXTENSION ...]]
+                                url
 
 positional arguments:
   url                   page url
@@ -14,5 +16,9 @@ optional arguments:
                         output path (default: out)
   -s SELECTOR, --selector SELECTOR
                         CSS selector (default: img)
-  -a ATTR, --attr ATTR  target attribute (default: src)
+  -a ATTRIBUTE, --attribute ATTRIBUTE
+                        target attribute (default: src)
+  -e EXTENSION [EXTENSION ...], --extension EXTENSION [EXTENSION ...]
+                        target file extensions (default: ['.gif', '.jpg',
+                        '.jpeg', '.png'])
 ```
