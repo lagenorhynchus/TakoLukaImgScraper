@@ -6,7 +6,6 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-TARGET_SUFFIX = ('.gif', '.jpg', '.jpeg', '.png')
 os.environ['REQUESTS_CA_BUNDLE'] = os.path.abspath('../certs/cacert.pem')
 file_names = set()
 
@@ -19,8 +18,8 @@ def fetch_page(url):
     return res.text
 
 
-def download_img(url, dst_dir):
-    if not url.endswith(TARGET_SUFFIX):
+def download_img(url, dst_dir, extensions):
+    if not url.endswith(extensions):
         return
     file_name = os.path.basename(url)
     if file_name in file_names:
@@ -40,14 +39,22 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('url', help='page url')
-    parser.add_argument('-o', '--outpath', default='out', help='output path')
-    parser.add_argument('-s', '--selector', default='img', help='CSS selector')
-    parser.add_argument('-a', '--attr', default='src', help='target attribute')
+    parser.add_argument('-o', '--outpath', default='out',
+                        help='output path')
+    parser.add_argument('-s', '--selector', default='img',
+                        help='CSS selector')
+    parser.add_argument('-a', '--attribute', default='src',
+                        help='target attribute')
+    parser.add_argument('-e', '--extension', nargs='+',
+                        default=['.gif', '.jpg', '.jpeg', '.png'],
+                        help='target file extensions')
     args = parser.parse_args()
 
     soup = BeautifulSoup(fetch_page(args.url), 'html.parser')
-    img_urls = map(lambda img: img.get(args.attr), soup.select(args.selector))
+    img_urls = map(lambda img: img.get(args.attribute),
+                   soup.select(args.selector))
     if not os.path.exists(args.outpath):
         os.makedirs(args.outpath)
+    extensions = tuple(args.extension)
     for img_url in img_urls:
-        download_img(urljoin(args.url, img_url), args.outpath)
+        download_img(urljoin(args.url, img_url), args.outpath, extensions)
