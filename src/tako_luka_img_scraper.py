@@ -25,9 +25,11 @@ def download_img(url, dst_dir, extensions):
     if file_name in file_names:
         return
     file_names.add(file_name)
+
     print('downloading a file...')
     print(url)
     time.sleep(1)
+
     res = requests.get(url)
     if res.status_code != 200:
         return
@@ -53,8 +55,10 @@ if __name__ == '__main__':
     soup = BeautifulSoup(fetch_page(args.url), 'html.parser')
     img_urls = map(lambda img: img.get(args.attribute),
                    soup.select(args.selector))
+
     if not os.path.exists(args.outpath):
         os.makedirs(args.outpath)
+
     extensions = tuple(args.extension)
     for img_url in img_urls:
         download_img(urljoin(args.url, img_url), args.outpath, extensions)
