@@ -1,5 +1,7 @@
 # TakoLukaImgScraper
 
+Webページ内の画像ファイル収集プログラム(スクレイパー)。
+
 ## Usage
 ```console
 $ tako_luka_img_scraper -h
