@@ -1,6 +1,6 @@
 # TakoLukaImgScraper
 
-Webページ内の画像ファイル収集プログラム(スクレイパー)。
+An image file scraper program.
 
 ## Usage
 ```console
